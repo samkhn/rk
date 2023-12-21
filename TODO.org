@@ -1,0 +1,18 @@
+* TODO doc for real usb deployment. also how to do this on windows?
+dd if=target/x86_64-target/debug/bootimage-rk.bin of=/dev/sdX && sync
+where sdX is the flash drive
+* TODO how does bootimage work?
+* TODO how does Volatile crate work? Is it that assembly trick?
+* TODO internal memory layout of a crate? why does macro_export place a macro in the root of the crate?
+* TODO when we gave the Writer type an address to the VGA buffer, we wrote:
+#+BEGIN_SRC rust
+  buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+#+END_SRC
+Decipher how to read that
+* TODO how does lazy_static work?
+* TODO read how the rustc const evaluator works
+** TODO https://rustc-dev-guide.rust-lang.org/const-eval.html
+** TODO https://github.com/rust-lang/rfcs/pull/2345
+* TODO RefCell vs UnsafeCell? Interior mutability?
+* TODO implement a spinlock (replace spin crate alltogether)
+* TODO read other reprs in rustonomicon file:///C:/Users/samiu/.rustup/toolchains/nightly-x86_64-pc-windows-msvc/share/doc/rust/html/nomicon/other-reprs.html
