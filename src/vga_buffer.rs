@@ -50,8 +50,8 @@ struct ScreenChar {
     color_code: ColorCode,
 }
 
-const BUFFER_WIDTH: usize = 25;
-const BUFFER_HEIGHT: usize = 80;
+const BUFFER_WIDTH: usize = 80;
+const BUFFER_HEIGHT: usize = 25;
 
 #[repr(transparent)]
 struct Buffer {
@@ -139,4 +139,26 @@ macro_rules! println {
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
     WRITER.lock().write_fmt(args).unwrap();
+}
+
+#[test_case]
+fn test_println_simple_doesnt_panic() {
+    println!("test_println_simple output");
+}
+
+#[test_case]
+fn test_println_many_doesnt_panic() {
+    for _ in 0..200 {
+        println!("test_println_many output");
+    }
+}
+
+#[test_case]
+fn test_println_output() {
+    let s = "Some test string that fits on a single line";
+    println!("{}", s);
+    for (i, c) in s.chars().enumerate() {
+        let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT - 2][i].read();
+        assert_eq!(char::from(screen_char.ascii_character), c);
+    }
 }
